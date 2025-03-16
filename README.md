@@ -38,3 +38,6 @@ Postman request screenshot:
 <img width="842" alt="image" src="https://github.com/user-attachments/assets/339c71b2-cae1-4a41-943b-70d326ed81d1" />
 
 
+Model is not been pushed on the github as it was very large file, so i thought to not push it, but the model training code is there to reproduce the same model.
+
+
