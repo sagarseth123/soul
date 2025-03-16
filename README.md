@@ -1,25 +1,40 @@
+
 Dataset
-mnist fashion datset is been used,
-it containes 10,000 items with 10 classes, each class has 1000 records, the dataset is in csv file where roes present one item and columns contains 785 columns, where 1 columns was label and rest of the columns were image pixel of 28*28 size.
+The Fashion MNIST dataset was used for this project. It consists of 10,000 images across 10 distinct classes, with each class containing 1,000 samples. The dataset is stored in a CSV file, where each row represents a single image and consists of 785 columns—the first column corresponds to the label, while the remaining 784 columns represent pixel values of a 28×28 grayscale image.
 
-Data Preprocessing:
-Not much feature engineering was needed on dataset. for laoding  and batching the data i use pytorch Datasets and dataloaders.
+Data Preprocessing
+Minimal feature engineering was required for this dataset. PyTorch’s Dataset and DataLoader modules were utilized for data loading and batching, ensuring efficient data handling during training and inference.
 
-Model Training & Evaluation:
-first i tried to train a very simple cnn model to showcase model creation, which definately won't had very bad accuracy as it will very small model.
-later i used existing vgg16 model and re-trained it's last linear layer on my dataset, the vgg16 accept the image of format 3*224*224 but our dataset had the images of 1*28*28 so we need to resize out image into 3*224*224 with respect to vgg16 input format. the training was very simple and only 10 epochs is been used to re-train and i didn't experiment much with the training as it was very costly and time consuming step, i took the model after first training itself and started it evaluation,
-i checked the model performance using various performance metrics and score for each one of them is:
+Model Training & Evaluation
+Initially, a basic CNN model was implemented to demonstrate model creation. However, due to its small architecture, the performance was suboptimal.
+
+To improve accuracy, a pre-trained VGG16 model was used, with its final fully connected layer modified to classify the 10 Fashion MNIST classes. Since VGG16 expects input images of size 3×224×224, whereas our dataset consists of 1×28×28 grayscale images, preprocessing steps were applied to resize and convert grayscale images to RGB format.
+
+The training process was straightforward:
+
+Only the last linear layer was retrained.
+10 training epochs were used without extensive hyperparameter tuning due to computational constraints.
+The model was evaluated using multiple performance metrics:
+
 Accuracy: 0.605
-Precision: 0.7342281276775325
-Recall: 0.6072630714749905
-F1: 0.5644224763060713
+Precision: 0.7342
+Recall: 0.6073
+F1-score: 0.5644
+Model Deployment
+A FastAPI-based REST API was developed to expose the model's inference functionality. The /predict endpoint includes basic authentication, with the following credentials:
 
-Model Deployment:
-I created a simple fast API with /predict endpoint with very basic authentication with username = admin and passowrd = password = password123 for performing inferecnce on the model:
-the input the api is a array of size 784(28*28) where each element is image pixel, anf later inside the api we are converting it into a rgb image of size 224*224*3.
-once the development completed we containerize the api using docker and try to build the image and later ran that image.
+Username: admin
+Password: password123
+The API accepts an input array of 784 values (representing a flattened 28×28 grayscale image). Inside the API, the image is converted to an RGB format (3×224×224) to match VGG16’s input requirements.
 
-here i mention the postman screenshot:
+Containerization & Deployment
+The API was containerized using Docker to ensure portability and ease of deployment.
+A Docker image was built and successfully executed.
+API Testing
+The /predict endpoint was validated using Postman, ensuring that the model performs inference correctly.
+
+Postman request screenshot:
+
 <img width="842" alt="image" src="https://github.com/user-attachments/assets/339c71b2-cae1-4a41-943b-70d326ed81d1" />
 
 
